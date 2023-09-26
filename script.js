@@ -1,28 +1,32 @@
 function threeSum(arr, target) {
 // write your code here
-	 let diff = {};
-        for (let i = 0; i < arr.length-2; i++) {
-            for (let j = i+1; j < arr.length-1; j++) {
-                for (let k = j+1; k < arr.length; k++) {
-                    let sum = arr[i]+arr[j]+arr[k];
-                    let cur_diff = Math.abs(sum-target);
-                    diff[sum] = cur_diff;
-                }
-            }
-        }  
-    
-        // console.log(diff, typeof diff);
-        let min_value = Infinity;
-        let min_sum;
-        for (const key in diff) {
-            // console.log(`${key}: ${diff[key]}`);
-            if (diff[key] < min_value) {
-                min_value = diff[key];
-                min_sum = key;
-            }
-        }
-        console.log(min_sum);
-	return parseInt(min_sum);
+	  arr.sort((a, b) => a - b);
+
+  let closestSum = Infinity;
+  let closestDiff = Infinity;
+
+  for (let i = 0; i < arr.length - 2; i++) {
+    let left = i + 1;
+    let right = arr.length - 1;
+
+    while (left < right) {
+      const currentSum = arr[i] + arr[left] + arr[right];
+      const currentDiff = Math.abs(currentSum - target);
+
+      if (currentDiff < closestDiff) {
+        closestDiff = currentDiff;
+        closestSum = currentSum;
+      }
+
+      if (currentSum < target) {
+        left++;
+      } else {
+        right--;
+      }
+    }
+  }
+
+  return closestSum;
   
 }
 
